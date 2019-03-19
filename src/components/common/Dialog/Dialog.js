@@ -21,6 +21,7 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
     outline: 'none',
+    borderRadius: '4px',
   },
   buttonOk: {
     marginLeft: '20px',

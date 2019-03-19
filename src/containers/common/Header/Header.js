@@ -24,6 +24,9 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
+  input: {
+    minWidth: '100%',
+  },
 });
 
 function Header(props) {
@@ -74,7 +77,7 @@ function Header(props) {
         confirmText={'OK'}
         title={'Add Stage'}
       >
-        <Input />
+        <Input className={classes.input} />
       </Dialog>
     </Fragment>
   );
