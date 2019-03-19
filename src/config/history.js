@@ -1,4 +1,4 @@
-import createBrowserHistory from 'history/createBrowserHistory';
+const createBrowserHistory = require('history').createBrowserHistory;
 
 // Make history aware of the base path.
 export const history = createBrowserHistory({

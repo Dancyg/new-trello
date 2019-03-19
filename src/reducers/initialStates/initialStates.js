@@ -1,5 +1,10 @@
 export const commonInitialState = {
   locale: 'en',
+  stages: {
+    1: {
+      name: 'done',
+    },
+  },
 };
 
 export const notificationsInitialState = {

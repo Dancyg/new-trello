@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './FlyBox.css';
 
-const FlyBox = ({
+function FlyBox({
   children,
   margin,
   padding,
@@ -18,7 +18,7 @@ const FlyBox = ({
   marginRight,
   customStyles,
   ...props
-}) => {
+}) {
   let styles = Object.assign(
     {},
     paddingTop && { paddingTop: '15px' },
@@ -39,7 +39,7 @@ const FlyBox = ({
       {React.Children.map(children, child => React.cloneElement(child, props))}
     </div>
   );
-};
+}
 
 FlyBox.propTypes = {
   children: PropTypes.any,

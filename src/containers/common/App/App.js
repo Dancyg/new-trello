@@ -1,34 +1,25 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { Header } from '../../../containers';
-import { FlyBox } from '../../../components';
+import { Header, StageSet } from '../../../containers';
+// import { FlyBox } from '../../../components';
 import { pageUrl } from '../../../config';
-import { Row, Col } from '../../../components';
+// import { Row, Col } from '../../../components';
 
-export class App extends Component {
-  render() {
-    return (
-      <Fragment>
-        <FlyBox
-          customStyles={{ minWidth: '1150px', overflow: 'inherit' }}
-          marginBottom
-        >
-          <Header />
-        </FlyBox>
+import './App.css';
 
-        <Row spacing={16}>
-          <Col item xs={10}>
-            <Switch>
-              <Route path={pageUrl.main} component={props => <div>main</div>} />
-              <Redirect to={pageUrl.main} />
-            </Switch>
-          </Col>
-        </Row>
-      </Fragment>
-    );
-  }
+export function App(props) {
+  return (
+    <Fragment>
+      <Header />
+
+      <Switch>
+        <Route path={pageUrl.main} component={StageSet} />
+        <Redirect to={pageUrl.main} />
+      </Switch>
+    </Fragment>
+  );
 }
 
 App.propTypes = {};

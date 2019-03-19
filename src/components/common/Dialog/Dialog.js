@@ -1,35 +1,92 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DialogM from '@material-ui/core/Dialog';
-import Fade from '@material-ui/core/Fade';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import ModalM from '@material-ui/core/Modal';
+import Button from '@material-ui/core/Button';
 
-const Dialog = ({
-  children,
-  handleClose,
-  isOpen,
-  fullScreen,
-  ...props
-}) => {
+import './Dialog.css';
+
+const getModalStyle = () => ({
+  top: `${50}%`,
+  left: `${50}%`,
+  transform: `translate(-${50}%, -${50}%)`,
+});
+
+const styles = theme => ({
+  paper: {
+    position: 'absolute',
+    width: '600px',
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: 'none',
+  },
+  buttonOk: {
+    marginLeft: '20px',
+  },
+});
+
+function Dialog(props) {
   return (
-    <div>
-      <DialogM
-        fullScreen={fullScreen}
-        open={isOpen}
-        onClose={handleClose}
-        TransitionComponent={Fade}
-        {...props}
-      >
-        {children}
-      </DialogM>
-    </div>
+    <ModalM
+      aria-labelledby="simple-modal-title"
+      aria-describedby="simple-modal-description"
+      open={props.show}
+      onClose={props.onClose}
+      {...props.modalProps}
+    >
+      <div style={getModalStyle()} className={props.classes.paper}>
+        <div className="title-container">
+          <Typography variant="title">{props.title}</Typography>
+        </div>
+
+        {props.children}
+
+        <div className="controls">
+          {props.onCancelClick && (
+            <Button
+              onClick={props.onCancelClick}
+              className="control-cancel"
+              variant="outlined"
+            >
+              {props.cancelText}
+            </Button>
+          )}
+          {props.onConfirmClick && (
+            <Button
+              onClick={props.onConfirmClick}
+              className={props.classes.buttonOk}
+              variant="outlined"
+            >
+              {props.confirmText}
+            </Button>
+          )}
+        </div>
+      </div>
+    </ModalM>
   );
-};
+}
 
 Dialog.propTypes = {
-  children: PropTypes.object,
-  isOpen: PropTypes.bool,
-  handleClose: PropTypes.bool,
-  fullScreen: PropTypes.bool,
+  classes: PropTypes.object.isRequired,
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  innerComponent: PropTypes.any,
+  confirmText: PropTypes.string,
+  title: PropTypes.string,
+  modalProps: PropTypes.object,
+  onCancelClick: PropTypes.func,
+  onConfirmClick: PropTypes.func,
+  cancelText: PropTypes.string,
+  children: PropTypes.any,
 };
 
-export default Dialog;
+Dialog.defaultProps = {
+  confirmText: 'ok',
+  cancelText: 'cancel',
+  modalProps: {},
+  title: 'Title',
+};
+
+export default withStyles(styles)(Dialog);

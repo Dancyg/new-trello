@@ -1,0 +1,14 @@
+.controls {
+  padding: 20px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.control-ok {
+  margin-left: 20px;
+}
+
+.title-container {
+  margin-bottom: 20px;
+}
