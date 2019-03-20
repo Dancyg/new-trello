@@ -27,7 +27,7 @@ function apiCallCustomHeaders(store) {
 // common config for redux-persist - to save info locally - is not required
 const persistConfig = {
   key: 'root',
-  whitelist: ['auth'],
+  whitelist: ['auth', 'common'],
   storage,
 };
 

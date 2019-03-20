@@ -7,6 +7,7 @@ import { Stage } from '../../../containers';
 import './StageSet.css';
 
 function StageSet(props) {
+  console.log(props);
   return (
     <div className="stage-set">
       {map(props.stages, (stage, index) => {
@@ -17,6 +18,7 @@ function StageSet(props) {
 }
 
 const mapStateToProps = state => ({
+  common: state.common,
   stages: state.common.stages,
 });
 

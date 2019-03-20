@@ -4,12 +4,12 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import grey from '@material-ui/core/colors/grey';
 
-import { TextWrapper, Dialog } from '../../../components';
+import { TextWrapper, Dialog, Input } from '../../../components';
+import { notify } from '../../../utils';
 import { A } from '../../../index';
 
 const styles = theme => ({
@@ -24,14 +24,13 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
-  input: {
-    minWidth: '100%',
-  },
 });
 
 function Header(props) {
   const [state, setStateRow] = useState({
     isAddStageOpen: false,
+    stageName: '',
+    stageIndex: '',
   });
 
   function setState(newState) {
@@ -39,14 +38,26 @@ function Header(props) {
   }
   const { classes } = props;
 
-  // function addStage() {
-  //   A.dispatchCommon({
-  //     [`stages${}`]: {}
-  //   });
-  // }
+  function addStage() {
+    A.dispatchCommon({
+      [`stages.${state.stageIndex}`]: { name: state.stageName },
+    });
+    notify({
+      status: 'info',
+      message: `Stage '${state.stageName}' was added.`,
+    });
+    toggleAddStageDialog();
+  }
 
   function toggleAddStageDialog() {
     setState({ isAddStageOpen: !state.isAddStageOpen });
+    if (!Boolean(state.isAddStageOpen)) {
+      clearInputs();
+    }
+  }
+
+  function clearInputs() {
+    setState({ stageName: '', stageIndex: null });
   }
 
   return (
@@ -70,14 +81,27 @@ function Header(props) {
         </Toolbar>
       </AppBar>
       <Dialog
-        onConfirmClick={() => {}}
+        onConfirmClick={addStage}
         onCancelClick={toggleAddStageDialog}
         show={state.isAddStageOpen}
         onClose={toggleAddStageDialog}
         confirmText={'OK'}
         title={'Add Stage'}
       >
-        <Input className={classes.input} />
+        <Input
+          label="Stage Name"
+          value={state.stageName}
+          onChange={e => {
+            setState({ stageName: e.target.value });
+          }}
+        />
+        <Input
+          label="Stage Index"
+          value={state.stageIndex}
+          onChange={e => {
+            setState({ stageIndex: e.target.value });
+          }}
+        />
       </Dialog>
     </Fragment>
   );
