@@ -1,4 +1,4 @@
-# new-trello
+# react-bootstrap
 
 simple project on react
 
